@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces – warm charcoal, like a darkened house before curtain */
+  --color-night: #0c0b0b;
+  --color-stage: #141212;
+  --color-stage-2: #1c1918;
+  --color-edge: #2a2625;
+  --color-edge-soft: #201d1c;
+
+  /* Text */
+  --color-chalk: #f4efe9;
+  --color-smoke: #a59d96;
+  --color-ash: #6e6762;
+
+  /* Accent – stage red */
+  --color-ember: #e3342c;
+  --color-ember-deep: #a91e18;
+  --color-ember-soft: #ff7a6b;
+
+  --font-sans: var(--font-heebo), system-ui, sans-serif;
+
+  --ease-stage: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-rise: rise 0.9s var(--ease-stage) both;
+  --animate-portrait: portrait 2s var(--ease-stage) both;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+  --animate-spotlight: spotlight 2.4s var(--ease-stage) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes portrait {
+    from {
+      opacity: 0;
+      transform: scale(1.08);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes spotlight {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgb(227 52 44 / 0.55);
+    }
+    60% {
+      box-shadow: 0 0 0 7px rgb(227 52 44 / 0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: var(--color-night);
+  }
+
+  body {
+    background-color: var(--color-night);
+    color: var(--color-chalk);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Film grain – keeps the dark from feeling flat and digital */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--color-ember);
+    color: var(--color-chalk);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 3px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
